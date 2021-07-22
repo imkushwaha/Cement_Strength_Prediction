@@ -66,11 +66,11 @@ def predict_strength(Cement, Blast_Furnace_Slag, Fly_Ash, Water, Superplasticize
 
 
 def main():
-    st.title("Strength Of Cement")
+    st.title("Concrete Compressive Strength")
     st.image("image.jpg", width = 700)
     html_temp = """
     <div style="background-color:tomato;padding:10px">
-    <h2 style="color:white;text-align:center;">Streamlit Cemenet Strength Prediction ML App </h2>
+    <h2 style="color:white;text-align:center;">Streamlit Concrete Compressive Strength Prediction ML App </h2>
     </div>
     """
     st.markdown(html_temp,unsafe_allow_html=True)
