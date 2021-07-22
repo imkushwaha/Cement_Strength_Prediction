@@ -6,7 +6,7 @@ import streamlit as st
 from PIL import Image
 
 
-pickle_in = open("regressor.pkl","rb")
+pickle_in = open("finalized_model.sav","rb")
 regressor=pickle.load(pickle_in)
 
 #@app.route('/')
@@ -59,14 +59,15 @@ def predict_strength(Cement, Blast_Furnace_Slag, Fly_Ash, Water, Superplasticize
         
     """
    
-    prediction=regressor.predict([[Cement, Blast_Furnace_Slag, Fly_Ash, Water, Superplasticizer, Coarse_Aggregate, Fine_Aggregate, Age]])
-    print(prediction)
-    return prediction
+    prediction=regressor.predict(np.array([[Cement, Blast_Furnace_Slag, Fly_Ash, Water, Superplasticizer, Coarse_Aggregate, Fine_Aggregate, Age]]))
+    
+    return prediction[0]
 
 
 
 def main():
     st.title("Strength Of Cement")
+    st.image("image.jpg", width = 700)
     html_temp = """
     <div style="background-color:tomato;padding:10px">
     <h2 style="color:white;text-align:center;">Streamlit Cemenet Strength Prediction ML App </h2>
@@ -85,33 +86,35 @@ def main():
     result=""
     if st.button("Predict"):
 
-        result = predict_strength(Cement, Blast_Furnace_Slag, Fly_Ash, Water, Superplasticizer, Coarse_Aggregate, Fine_Aggregate, Age)
+        result = predict_strength(float(Cement), float(Blast_Furnace_Slag), float(Fly_Ash), float(Water), float(Superplasticizer), float(Coarse_Aggregate), float(Fine_Aggregate), float(Age))
         
     st.success('The output is {}'.format(result))
     
 
     if st.button("About ML App"):
-        st.text("To build a regression model to predict the concrete compressive strength based on the different features in the training data")
-        st.text("Built with Streamlit")
-
-
+               st.text("Regression model to predict the concrete compressive strength based on the different features in the training data")
+               st.text("Built with Streamlit")     
+       
     if st.button("Input Dictionary"):
-        st.text("Cement : Quantity of Cement present in kg in a m3 mixture") 
-        st.text("Blast_Furnance_Slag :  Quantity of Blast_Furnance_Slag present in kg in a m3 mixture") 
-        st.text("Fly_Ash :  Quantity of Fly_Ash present in kg in a m3 mixture")    
-        st.text("Water : Quantity of Fly_Ash present in kg in a m3 mixture")
-        st.text("Superplasticizer : Quantity of Superplasticizer in kg in a m3 mixture")
-        st.text("Coarse_Aggregate : Quantity of Coarse_Aggregate in kg in a m3 mixture")
-        st.text("Fine_Aggregate : Quantity of Fine_Aggregate in kg in a m3 mixture")
-        st.text("Age : Age in days")
-        st.text("Concrete compressive strength: Output Variable - Concrete compressive strength in (MPa, megapascals)")
+               st.text("Cement : Quantity of Cement present in kg in a m3 mixture") 
+               st.text("Blast_Furnance_Slag :  Quantity of Blast_Furnance_Slag present in kg in a m3 mixture") 
+               st.text("Fly_Ash :  Quantity of Fly_Ash present in kg in a m3 mixture")    
+               st.text("Water : Quantity of Fly_Ash present in kg in a m3 mixture")
+               st.text("Superplasticizer : Quantity of Superplasticizer in kg in a m3 mixture")
+               st.text("Coarse_Aggregate : Quantity of Coarse_Aggregate in kg in a m3 mixture")
+               st.text("Fine_Aggregate : Quantity of Fine_Aggregate in kg in a m3 mixture")
+               st.text("Age : Age in days")
+               st.text("Concrete compressive strength: Output Variable - Concrete compressive strength in (MPa, megapascals)")
+        
+               
         
 
     if st.button("About Author"):
-        st.text("Name : Upendra Kumar") 
-        st.text("Email : upendra.kumar48762@gmail.com") 
-        st.text("Oragnization : Data Science Student at ineuron.ai")  
+               st.text("Name : Upendra Kumar") 
+               st.text("Email : upendra.kumar48762@gmail.com") 
+               st.text("Oragnization : Data Science Student at ineuron.ai")  
 
+        
 if __name__=='__main__':
     main()
 
